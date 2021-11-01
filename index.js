@@ -18,7 +18,6 @@ console.log(uri);
 async function run(){
     try{
         await client.connect();
-        // console.log('database is connected');
         const database = client.db('tourism');
         const serviceCollection = database.collection('services');
         const reviewCollection = database.collection('review');
@@ -28,7 +27,6 @@ async function run(){
         // POST API
         app.post('/services', async(req, res) => {
             const service = req.body;
-            // console.log('hit the post api', service);
             const result = await serviceCollection.insertOne(service);
             console.log(result);
             res.json(result);
