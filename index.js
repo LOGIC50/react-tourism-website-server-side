@@ -23,14 +23,30 @@ async function run(){
         const serviceCollection = database.collection('services');
         const reviewCollection = database.collection('review');
         const guideCollection = database.collection('guides');
+        const registerCollection = database.collection('register')
 
         // POST API
         app.post('/services', async(req, res) => {
             const service = req.body;
-            console.log('hit the post api', service);
+            // console.log('hit the post api', service);
             const result = await serviceCollection.insertOne(service);
             console.log(result);
             res.json(result);
+        })
+
+        // POST REGISTRATION API
+        app.post('/register/', async(req, res) => {
+            const register = req.body;
+            console.log('hit the post api', register);
+            const result = await registerCollection.insertOne(register); 
+            res.json(result);
+        })
+
+        // GET REGISTRATION API
+        app.get('/register/', async(req, res) => {
+            const cursor = registerCollection.find({});
+            const register = await cursor.toArray();
+            res.json(register);
         })
 
         // GET SERVICE API 
@@ -52,8 +68,7 @@ async function run(){
             const cursor = guideCollection.find({});
             const guides = await cursor.toArray();
             res.send(guides);
-        })
-        
+        })  
     }
     finally{
         // await client.close();
